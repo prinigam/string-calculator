@@ -11,4 +11,9 @@ RSpec.describe StringCalculator do
     expect(calc.add('1')).to eq(1)
     expect(calc.add('42')).to eq(42)
   end
+
+  it 'adds two comma-separated numbers' do
+    expect(calc.add('1,2')).to eq(3)
+    expect(calc.add('10,5')).to eq(15)
+  end
 end
