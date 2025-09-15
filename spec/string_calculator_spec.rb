@@ -20,4 +20,9 @@ RSpec.describe StringCalculator do
   it 'adds any number of comma-separated numbers' do
     expect(calc.add('1,2,3,4')).to eq(10)
   end
+
+  it 'handles newlines as delimiters as well as commas' do
+    expect(calc.add("1\n2,3")).to eq(6)
+    expect(calc.add("4\n5\n6")).to eq(15)
+  end
 end
