@@ -39,4 +39,8 @@ RSpec.describe StringCalculator do
     expect(calc.add("2,1001")).to eq(2)
     expect(calc.add("1000,2")).to eq(1002)
   end
+
+  it "supports delimiters of any length" do
+    expect(calc.add("//[***]\n1***2***3")).to eq(6)
+  end
 end
