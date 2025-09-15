@@ -1,7 +1,17 @@
 class StringCalculator
   def add(numbers)
-    return 0 if numbers.nil? || numbers == ''
+    return 0 if numbers.nil? || numbers.strip == ''
 
-    numbers.split(/,|\n/).map(&:to_i).sum
+    nums = numbers.dup
+    delimiter_regex = /,|\n/
+
+    if nums.start_with?('//')
+      header, nums = nums.split("\n", 2)
+      custom = header[2..-1]
+      delimiter_regex = Regexp.new(Regexp.escape(custom))
+    end
+
+    parts = nums.split(delimiter_regex).map(&:to_i)
+    parts.sum
   end
 end
