@@ -51,4 +51,8 @@ RSpec.describe StringCalculator do
   it "supports multiple delimiters with length longer than 1 char" do
     expect(calc.add("//[foo][bar]\n1foo2bar3")).to eq(6)
   end
+
+  it "handles multiplication operator" do
+    expect(calc.add("//op:multiply\n1,2,3,4")).to eq(24)
+  end
 end
