@@ -4,11 +4,15 @@ class StringCalculator
 
     nums = numbers.dup
     delimiter_regex = /,|\n/
+    operator = :add
 
     if nums.start_with?('//')
       header, nums = nums.split("\n", 2)
 
-      if header.include?("[")
+      if header.start_with?("//op:")
+        _, op = header.split(":",2)
+        operator = op.to_sym
+      elsif header.include?("[")
         delimiters = header.scan(/\[(.*?)\]/).flatten
         delimiter_regex = Regexp.union(delimiters.map { |d| Regexp.new(Regexp.escape(d)) })
       else
@@ -24,6 +28,15 @@ class StringCalculator
       raise ArgumentError.new("negative numbers not allowed #{negatives.join(',')}")
     end
 
-    parts.reject { |n| n > 1000 }.sum
+    parts.reject! { |n| n > 1000 }
+
+    case operator
+    when :add
+      parts.sum
+    when :multiply
+      parts.inject(1) {|prod, n| prod * n }
+    else
+      raise ArgumentError.new("Unknown operator")
+    end
   end
 end
